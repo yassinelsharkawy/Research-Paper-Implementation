@@ -1,0 +1,17 @@
+# IAM-ContextBench — Model Configuration
+model:
+  architecture: "ExplainableBoostingRegressor"
+  package: "interpret.glassbox"
+  hyperparameters:
+    max_bins: 32
+    interactions: 0
+    outer_bags: 8
+    learning_rate: 0.03
+    max_rounds: 2000
+    random_state: 42
+
+# Preprocessing rules
+preprocessing:
+  numeric_imputation: "median"
+  categorical_handling: "native_ebm"
+  boolean_encoding: "int"

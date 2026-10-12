@@ -1,0 +1,41 @@
+# ML Experiment Configuration
+project_name: "aws_iam_contextbench_ml"
+version: "3.0.0"
+
+# Dataset Location
+dataset:
+  path: "../aws_iam_contextbench_real_valid.csv"
+  jsonl_path: "../aws_iam_contextbench_real_valid.jsonl"
+  expected_samples: 534
+  expected_type_a_pairs: 208
+  expected_type_b_pairs: 39
+  expected_unpaired: 40
+  expected_families: 13
+
+# Target Specifications
+target:
+  primary_regression: "gt_analyst_priority_score"
+  secondary_reference: "gt_security_risk_score"
+  label_classification: "gt_analyst_priority_label"
+  triage_percentile_cutoff: 90.0
+
+# Split & Validation Setup
+split:
+  strategy: "StratifiedGroupKFold"
+  n_splits: 5
+  group_column: "policy_lineage_id"
+  stratify_column: "scenario_family"
+  primary_seed: 42
+  shuffle: true
+
+# Robustness Seeds
+robustness:
+  enabled: true
+  seeds: [2026, 31415]
+
+# Evaluation Parameters
+evaluation:
+  triage_k_values: [10, 25, 50]
+  bootstrap_iterations: 1000
+  confidence_level: 0.95
+  alpha: 0.05
